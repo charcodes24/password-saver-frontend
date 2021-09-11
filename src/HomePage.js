@@ -10,6 +10,7 @@ export default function HomePage({ onLogout, user }) {
     const history = useHistory()
     const [form, setForm] = useState({
         key: "",
+        charm: "",
         chain: ""
     })
 
@@ -55,6 +56,18 @@ export default function HomePage({ onLogout, user }) {
         setPasswords((mostUpdatedPasswords) => [...mostUpdatedPasswords, newPassword])
     }
 
+    function updatePasswords(updatedPassword) {
+        setPasswords((mostUpdatedPasswords) => {
+            return mostUpdatedPasswords.map((password) => {
+                if (updatedPassword.id === password.id) {
+                    return updatedPassword
+                } else {
+                    return password
+                }
+            })
+        })
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
         fetch('/passwords', {
@@ -65,6 +78,7 @@ export default function HomePage({ onLogout, user }) {
             },
             body: JSON.stringify({
                 key: form.key,
+                charm: form.charm,
                 chain: form.chain,
                 user_id: id
             })
@@ -73,6 +87,7 @@ export default function HomePage({ onLogout, user }) {
         .then(data => addNewPassword(data))
         setForm({
             key: "",
+            charm: "",
             chain:""
         })
     }
@@ -80,19 +95,50 @@ export default function HomePage({ onLogout, user }) {
 
     return (
       <div>
-            <h1>Hi {name}!</h1>
-            {toggleForm ? (
-                <form onSubmit={handleSubmit}>
-                    <input onChange={handleInput} type="text" placeholder="Password for..." name="key" value={form.key}/>
-                    <input onChange={handleInput} type="text" placeholder="password" name="chain" value={form.chain} />
-                    <button>Add New Password</button>
-                </form>
-            ) : null}
+        <h1>Hi {name}!</h1>
+        {toggleForm ? (
+          <form onSubmit={handleSubmit}>
+            <input
+              onChange={handleInput}
+              type="text"
+              placeholder="Password for..."
+              name="key"
+              value={form.key}
+            />
+            <input
+              onChange={handleInput}
+              type="text"
+              placeholder="charm"
+              name="charm"
+              value={form.charm}
+            />
+            <input
+              onChange={handleInput}
+              type="text"
+              placeholder="password"
+              name="chain"
+              value={form.chain}
+            />
+            <button>Add New Password</button>
+          </form>
+        ) : null}
         <button onClick={handleToggleForm}>Add Password</button>
         <button onClick={userLogout}>Logout</button>
-            {(passwords.length > 0) ?
-                passwords?.map((password) => {
-                return <PasswordCard key={password.id} password={password} user={user} reflectDeletedPassword={reflectDeletedPassword}/>}) : <h3>You have no passwords saved yet.</h3>}
+        {passwords.length > 0 ? (
+          passwords?.map((password) => {
+            return (
+              <PasswordCard
+                key={password.id}
+                password={password}
+                user={user}
+                reflectDeletedPassword={reflectDeletedPassword}
+                updatePasswords={updatePasswords}
+              />
+            );
+          })
+        ) : (
+          <h3>You have no passwords saved yet.</h3>
+        )}
       </div>
     );
 }

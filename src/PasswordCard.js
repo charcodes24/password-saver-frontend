@@ -1,10 +1,11 @@
 import { useState } from "react"
 
-export default function Password({ password, reflectDeletedPassword }) {
-    const { id, key, chain } = password
+export default function Password({ password, reflectDeletedPassword, updatePasswords }) {
+    const { id, key, charm, chain } = password
     const [toggleForm, setToggleForm] = useState(false)
     const [form, setForm] = useState({
         key: "",
+        charm: "",
         chain: ""
     })
 
@@ -32,7 +33,7 @@ export default function Password({ password, reflectDeletedPassword }) {
         })
             .then(res => {
                 if (res.ok) {
-                console.log('response ok!')
+                    res.json().then((data) => updatePasswords(data))
                 } else {
                     res.json().then((err) => 
                     console.log((err)))
@@ -51,8 +52,9 @@ export default function Password({ password, reflectDeletedPassword }) {
 
     return (
         <div>
-            <p>{key}</p>
-            <p>{chain}</p>
+            <p>Key: {key}</p>
+            <p>Charm: {charm}</p>
+            <p>Chain: {chain}</p>
             {!toggleForm ? <button onClick={handleToggleForm}>Update</button> : null}
             {toggleForm ? (
                 <form onSubmit={handleSubmit}>
