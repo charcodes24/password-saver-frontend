@@ -2,6 +2,7 @@ import { useState } from "react"
 
 
 export default function Signup() {
+    const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         name: "",
         username: "",
@@ -9,33 +10,71 @@ export default function Signup() {
         password_confirmation: ""
     })
 
+    console.log(errors)
+
+    function handleInput(e) {
+      e.preventDefault();
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+      });
+    }
+    console.log(form);
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        fetch('/users', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(form)
+        })
+            .then((res) => {
+                debugger
+                if (res.ok) {
+                console.log("CREATED USER")
+                } else {
+                    res.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
+
+
+
 
     return (
-      <div>
-        <form>
+        <div>
+            <h3>Sign-Up</h3>
+        <form onSubmit={handleSubmit}>
           <input 
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    placeholder="name"
+            type="text"
+            onChange={handleInput}
+            name="name"
+            value={form.name}
+            placeholder="name"
           />
           <input 
-                    type="text"
-                    name="username"
-                    value={form.username}
-                    placeholder="username"
+            type="text"
+            onChange={handleInput}
+            name="username"
+            value={form.username}
+            placeholder="username"
           />
           <input 
-                    type="text"
-                    name="password"
-                    value={form.password}
-                    placeholder="password"
+            type="text"
+            onChange={handleInput}
+            name="password"
+            value={form.password}
+            placeholder="password"
           />
           <input 
-                    type="text"
-                    name="password_confirmation"
-                    value={form.password_confirmation}
-                    placeholder="password_confirmation"
+            type="text"
+            onChange={handleInput}
+            name="password_confirmation"
+            value={form.password_confirmation}
+            placeholder="password_confirmation"
                 />
                 <button>Sign-Up!</button>
         </form>
