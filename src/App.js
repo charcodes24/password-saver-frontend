@@ -1,5 +1,5 @@
 import { Switch, Route, Redirect } from 'react-router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -11,6 +11,23 @@ function App() {
   const [user, setUser] = useState("")
   const [loggedIn, setLoggedIn] = useState(false)
 
+  function keepUserLoggedIn(user) {
+    setUser(user);
+    setLoggedIn(true);
+  }
+
+  useEffect(() => {
+    fetch("/me").then((response) => {
+      if (response.ok) {
+        response.json().then((user) => {
+          keepUserLoggedIn(user)
+        })
+      }
+    })
+  }, []);
+
+  
+
   function onLogin(user) {
     setUser(user)
     setLoggedIn(true)
@@ -21,7 +38,7 @@ function App() {
     setLoggedIn(false)
   }
 
-  console.log("USER IN APP", user)
+  console.log("USER IN APP", user.id)
   console.log("IS USER LOGGED IN?", loggedIn)
 
   return (
@@ -34,7 +51,7 @@ function App() {
           {loggedIn ? <Redirect to="/home" /> : <Signup />}
         </Route>
         <Route path="/home">
-          <HomePage onLogout={onLogout}/>
+          <HomePage user={user} onLogout={onLogout}/>
         </Route>
       </Switch>
     </div>
