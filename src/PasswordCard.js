@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Password({ password }) {
+export default function Password({ password, reflectDeletedPassword }) {
     const { id, key, chain } = password
     const [toggleForm, setToggleForm] = useState(false)
     const [form, setForm] = useState({
@@ -39,6 +39,14 @@ export default function Password({ password }) {
             }
         })
     }
+
+    function deletePassword(e) {
+        e.preventDefault()
+        fetch(`passwords/${id}`, {
+            method: "DELETE"
+        })
+        reflectDeletedPassword(id)
+    }
     
 
     return (
@@ -51,7 +59,7 @@ export default function Password({ password }) {
                     <input onChange={handleInput} type="text" name="key" value={form.key} placeholder={key} />
                     <input onChange={handleInput} type="text" name="chain" value={form.chain} placeholder={chain} />
                     <button>Update Password</button>
-                    <button>Delete Password</button>
+                    <button onClick={deletePassword}>Delete Password</button>
                 </form>
             ) : null}
         </div>

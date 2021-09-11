@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useHistory } from "react-router"
 
 
 export default function Signup() {
+    const history = useHistory()
     const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         name: "",
@@ -34,7 +36,7 @@ export default function Signup() {
             .then((res) => {
                 debugger
                 if (res.ok) {
-                console.log("CREATED USER")
+                history.push("/home")
                 } else {
                     res.json().then((err) => setErrors(err.errors))
             }
