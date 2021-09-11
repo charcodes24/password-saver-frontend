@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
+import PasswordCard from "./PasswordCard";
+
 export default function HomePage({ onLogout, user }) {
     const { id } = user
     const [passwords, setPasswords] = useState([])
@@ -30,6 +32,9 @@ export default function HomePage({ onLogout, user }) {
       <div>
             <h1>Home Page</h1>
             <button onClick={userLogout}>Logout</button>
+            {passwords?.map((password) => {
+                return <PasswordCard key={password.id} password={password} />
+            })}
       </div>
     );
 }
