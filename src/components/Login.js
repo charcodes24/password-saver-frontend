@@ -1,6 +1,7 @@
 import { useState } from "react"
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, clearAppErrors }) {
+    const [errors, setErrors] = useState([])
     const [form, setForm] = useState({
         username: "",
         password: ""
@@ -12,6 +13,7 @@ export default function Login({ onLogin }) {
             ...form,
             [e.target.name]: e.target.value
         })
+        clearAppErrors()
     }
     console.log(form)
 
@@ -23,10 +25,18 @@ export default function Login({ onLogin }) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(form)
+        }).then((res) => {
+            if (res.ok) {
+                res.json().then((user) => onLogin(user))
+            } else {
+                res.json().then((err) => {
+                    setErrors(err.errors)
+                })
+            }
         })
-        .then((res) => res.json())
-        .then((user) => onLogin(user))
     }
+
+    console.log("ERRORS", errors)
 
 
     return (
@@ -48,6 +58,7 @@ export default function Login({ onLogin }) {
                 placeholder="password"
                 />
                 <button>Log-In</button>
+                {(errors.length > 0) ? errors.map((error) => <h3>{error}</h3>) : null}
             </form>
         </div>
     )
