@@ -1,12 +1,10 @@
 import { Switch, Route, Redirect } from 'react-router'
 import { useState, useEffect } from 'react'
 
-import NavBar from './components/NavBar';
+import About from './components/About';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import HomePage from './HomePage';
-
-import './App.css';
+import HomePage from './components/HomePage';
 
 function App() {
   const [errors, setErrors] = useState([])
@@ -23,6 +21,7 @@ function App() {
       if (response.ok) {
         response.json().then((user) => {
           keepUserLoggedIn(user)
+          clearAppErrors()
         })
       } else {
         response.json().then((err) => setErrors(err.errors))
@@ -30,13 +29,9 @@ function App() {
     })
   }, []);
 
-  console.log("APP ERRORS", errors)
-
   function clearAppErrors() {
     setErrors([])
   }
-
-  
 
   function onLogin(user) {
     setUser(user)
@@ -53,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      {!loggedIn ? <About /> : null}
       <Switch>
         <Route exact path="/">
           {loggedIn ? <Redirect to="/home" /> : <Login onLogin={onLogin} clearAppErrors={clearAppErrors}/>}
@@ -65,7 +60,7 @@ function App() {
           <HomePage user={user} onLogout={onLogout} />
         </Route>
       </Switch>
-      {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+      {/* {(errors.length > 0) ? errors.map((error) => <h3>APP: {error}</h3>) : null} */}
     </div>
   );
 }

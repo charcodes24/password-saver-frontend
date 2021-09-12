@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useHistory } from "react-router"
 
 
@@ -12,8 +13,6 @@ export default function Signup({ onLogin }) {
         password_confirmation: ""
     })
 
-    console.log(errors)
-
     function handleInput(e) {
       e.preventDefault();
       setForm({
@@ -21,7 +20,6 @@ export default function Signup({ onLogin }) {
         [e.target.name]: e.target.value,
       });
     }
-    console.log(form);
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -42,15 +40,11 @@ export default function Signup({ onLogin }) {
         })
     }
 
-    console.log(errors)
-
-
-
 
     return (
       <div>
         <h3>Sign-Up</h3>
-        <form onSubmit={handleSubmit}>
+        <form className="ui form signup" onSubmit={handleSubmit}>
           <input
             type="text"
             onChange={handleInput}
@@ -66,22 +60,26 @@ export default function Signup({ onLogin }) {
             placeholder="username"
           />
           <input
-            type="text"
+            type="password"
             onChange={handleInput}
             name="password"
             value={form.password}
             placeholder="password"
           />
           <input
-            type="text"
+            type="password"
             onChange={handleInput}
             name="password_confirmation"
             value={form.password_confirmation}
             placeholder="password_confirmation"
           />
-          <button>Sign-Up!</button>
+          <button className="ui basic green button">Sign-Up!</button>
         </form>
-        {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+        {(errors.length > 0) ? errors.map((error) => <h3>{error}</h3>) : null}
+
+        <div>
+          <h4>Already have an account? Login <Link to="/">here!</Link></h4>
+        </div>
       </div>
     );
 }

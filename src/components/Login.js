@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Login({ onLogin, clearAppErrors }) {
     const [errors, setErrors] = useState([])
@@ -36,30 +37,33 @@ export default function Login({ onLogin, clearAppErrors }) {
         })
     }
 
-    console.log("ERRORS", errors)
-
 
     return (
+      <div className="login">
+        <form className="ui form login" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            onChange={handleInput}
+            name="username"
+            value={form.username}
+            placeholder="username"
+          />
+          <input
+            type="password"
+            onChange={handleInput}
+            name="password"
+            value={form.password}
+            placeholder="password"
+          />
+          <button className="ui basic orange button">Log-In</button>
+          <br />
+        </form>
+        {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
         <div>
-            <h3>LogIn</h3>
-            <form onSubmit={handleSubmit}>
-                <input 
-                type="text"
-                onChange={handleInput}
-                name="username"
-                value={form.username}
-                placeholder="username"
-                />
-                <input 
-                    type="text"
-                    onChange={handleInput}
-                    name="password"
-                    value={form.password}
-                placeholder="password"
-                />
-                <button>Log-In</button>
-                {(errors.length > 0) ? errors.map((error) => <h3>{error}</h3>) : null}
-            </form>
+          <h4>
+            Dont have an account? Sign-up <Link to="/signup">here</Link>!
+          </h4>
         </div>
-    )
+      </div>
+    );
 }

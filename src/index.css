@@ -1,13 +1,120 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  box-sizing: border-box;
+  text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 100px;
+}
+
+.cards {
+  background-color: light blue;
+}
+
+.no-passwords {
+  text-align: center;
+}
+
+.charm {
+    max-width: 200px;
+    max-height: 500px;
+    padding: 40px;
+}
+
+p {
+  font-size: medium;
+  margin-bottom: 5px;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    margin-right: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+}  
+
+form.ui.form.add {
+    margin-left: 40%;
+    margin-right: 40%;
+    padding-bottom: 20px;
+}
+
+.add {
+  padding-top: 10px;
+}
+
+.ui-button {
+  padding: 10px;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.about-paragraph {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding-bottom: 50px;
+}
+
+.ui.input.login {
+  padding-bottom: 15px;
+}
+
+form.ui.form.add {
+    margin-left: 35%;
+    margin-right: 35%;
+    padding-bottom: 20px;
+}
+
+form.ui.form.login {
+    margin-left: 39%;
+    margin-right: 39%;
+    padding-bottom: 20px;
+}
+
+form.ui.form.signup {
+    margin-left: 39%;
+    margin-right: 39%;
+    padding-bottom: 20px;
+}
+
+ui.form input {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div {
+  margin: none;
+}
+
+h3.key {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0;
+  margin-bottom: 3px;
+}
+
+h3.charm {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0;
+  margin-bottom: 3px;
+}
+
+h3.chain {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0;
+  margin-bottom: 3px;
+}
+
+
+.sub-container {
+  display: flex;
+  align-items: center;
 }
