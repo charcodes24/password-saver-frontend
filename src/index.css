@@ -16,9 +16,14 @@ body {
 }
 
 .charm {
+    display: flex;
     max-width: 200px;
     max-height: 500px;
     padding: 40px;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
 
 p {
@@ -66,8 +71,8 @@ h1 {
 }
 
 form.ui.form.add {
-    margin-left: 35%;
-    margin-right: 35%;
+    margin-left: 40%;
+    margin-right: 40%;
     padding-bottom: 20px;
 }
 
@@ -118,6 +123,17 @@ h3.chain {
     align-items: center;
     flex-direction: row;
     justify-content: center;
+    flex-direction: wrap;
+    flex-wrap: wrap;
 }
 
+.ui.form.searchbar {
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
+.search {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
 

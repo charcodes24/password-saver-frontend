@@ -3,7 +3,7 @@ export default function Search({ search, handleSearchChange, handleSortChange })
 
     return (
       <div className="ui form searchbar">
-        <div>
+        <div className="search">
                 <input type="text" value={search} onChange={handleSearchChange} placeholder="Search..." />
         </div>
         <div>
