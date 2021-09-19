@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { trackPromise } from "react-promise-tracker";
 
 import PasswordCard from "./PasswordCard";
 import Search from "./Search";
@@ -18,10 +19,12 @@ export default function HomePage({ onLogout, user }) {
         chain: ""
     })
 
-    useEffect(() => {
+  useEffect(() => {
+    trackPromise(
         fetch(`/users/${id}/passwords`)
           .then((res) => res.json())
-          .then((data) => setPasswords(data));
+          .then((data) => setPasswords(data))
+      )
     }, [id]);
 
     function userLogout(e) {
