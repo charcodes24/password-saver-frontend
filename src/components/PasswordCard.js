@@ -49,9 +49,8 @@ export default function Password({ password, reflectDeletedPassword, updatePassw
                         setToggleForm(!toggleForm)
                     })
                 } else {
-                    console.log("RES", res);
                     res.json().then((err) =>
-                        console.log("ERR",err))
+                        setErrors(err))
             }
         })
     }

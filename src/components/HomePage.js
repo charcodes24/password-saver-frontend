@@ -6,7 +6,9 @@ import Search from "./Search";
 
 export default function HomePage({ onLogout, user }) {
   const [errors, setErrors] = useState([])
-    const { id, name } = user
+  const { id, name } = user
+  const [search, setSearch] = useState("")
+  const [sort, setSort] = useState("all")
     const [passwords, setPasswords] = useState([])
     const [toggleForm, setToggleForm] = useState(false)
     const history = useHistory()
@@ -35,6 +37,29 @@ export default function HomePage({ onLogout, user }) {
         const updatedPasswords = passwords.filter(password => password.id !== id)
         setPasswords(updatedPasswords)
     }
+  
+   function handleSearchChange(e) {
+     setSearch(e.target.value);
+   }
+
+   const searchPasswords = passwords.filter((password) =>
+     password.key.toLowerCase().startsWith(search.toLowerCase())
+   );
+  
+  function handleSortChange(e) {
+    setSort(e.target.value)
+  }
+
+  const sortedPasswords = searchPasswords.sort((pass1, pass2) => {
+    switch (sort) {
+      case "all":
+        return searchPasswords;
+      case "aToZ":
+        return pass1.key.toLowerCase() < pass2.key.toLowerCase() ? -1 : 1;
+      case "zToA":
+        return pass2.key.toLowerCase() < pass1.key.toLowerCase() ? -1 : 1;
+    }
+  })
 
     function handleToggleForm(e) {
         e.preventDefault()
@@ -100,6 +125,7 @@ export default function HomePage({ onLogout, user }) {
     }
 
 
+
     return (
       <div>
         <h1>Hi {name}! 🍄</h1>
@@ -140,11 +166,11 @@ export default function HomePage({ onLogout, user }) {
         <button className="ui basic yellow button" onClick={userLogout}>
           Logout
         </button>
-        <Search />
+        <Search search={search} handleSearchChange={handleSearchChange} handleSortChange={handleSortChange}/>
         <div className="card-container">
           <div className="sub-container">
             {passwords.length > 0 ? (
-              passwords?.map((password) => {
+              sortedPasswords?.map((password) => {
                 return (
                   <PasswordCard
                     key={password.id}
