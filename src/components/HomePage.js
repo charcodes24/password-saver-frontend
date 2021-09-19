@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import PasswordCard from "./PasswordCard";
+import Search from "./Search";
 
 export default function HomePage({ onLogout, user }) {
   const [errors, setErrors] = useState([])
@@ -139,6 +140,7 @@ export default function HomePage({ onLogout, user }) {
         <button className="ui basic yellow button" onClick={userLogout}>
           Logout
         </button>
+        <Search />
         <div className="card-container">
           <div className="sub-container">
             {passwords.length > 0 ? (

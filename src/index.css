@@ -113,8 +113,11 @@ h3.chain {
   margin-bottom: 3px;
 }
 
-
 .sub-container {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
 }
+
+
