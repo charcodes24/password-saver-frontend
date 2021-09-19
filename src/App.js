@@ -7,6 +7,7 @@ import Login from './components/Login';
 import HomePage from './components/HomePage';
 
 function App() {
+  const [loading, setLoading] = useState(true)
   const [errors, setErrors] = useState([])
   const [user, setUser] = useState("")
   const [loggedIn, setLoggedIn] = useState(false)
@@ -22,9 +23,11 @@ function App() {
         response.json().then((user) => {
           keepUserLoggedIn(user)
           clearAppErrors()
+          setLoading(false)
         })
       } else {
         response.json().then((err) => setErrors(err.errors))
+        setLoading(false)
       }
     })
   }, []);
@@ -43,8 +46,12 @@ function App() {
     setLoggedIn(false)
   }
 
-  console.log("USER IN APP", user.id)
-  console.log("IS USER LOGGED IN?", loggedIn)
+  console.log(loading)
+
+  if (loading) {
+    return null
+  }
+
 
   return (
     <div className="App">

@@ -58,7 +58,7 @@ export default function Login({ onLogin, clearAppErrors }) {
           <button className="ui basic orange button">Log-In</button>
           <br />
         </form>
-        {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+        {errors.length > 0 ? errors.map((error) => <h3 className="ui violet message">{error}</h3>) : null}
         <div>
           <h4>
             Dont have an account? Sign-up <Link to="/signup">here</Link>!

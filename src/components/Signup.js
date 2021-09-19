@@ -75,7 +75,7 @@ export default function Signup({ onLogin }) {
           />
           <button className="ui basic green button">Sign-Up!</button>
         </form>
-        {(errors.length > 0) ? errors.map((error) => <h3>{error}</h3>) : null}
+        {(errors.length > 0) ? errors.map((error) => <h3 className="ui violet message">{error}</h3>) : null}
 
         <div>
           <h4>Already have an account? Login <Link to="/">here!</Link></h4>

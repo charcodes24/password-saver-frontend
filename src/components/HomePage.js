@@ -10,6 +10,7 @@ export default function HomePage({ onLogout, user }) {
   const { id, name } = user
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("all")
+  const [loading, setLoading] = useState(true)
     const [passwords, setPasswords] = useState([])
     const [toggleForm, setToggleForm] = useState(false)
     const history = useHistory()
@@ -19,14 +20,17 @@ export default function HomePage({ onLogout, user }) {
         chain: ""
     })
 
+  //fetching user's passwords for display
   useEffect(() => {
-    trackPromise(
-        fetch(`/users/${id}/passwords`)
-          .then((res) => res.json())
-          .then((data) => setPasswords(data))
-      )
+    fetch(`/users/${id}/passwords`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPasswords(data);
+        setLoading(false);
+      });
     }, [id]);
 
+  //logic for logging out user when logout button clicked and redirecting to home page
     function userLogout(e) {
         e.preventDefault()
         fetch("/logout", {
@@ -35,24 +39,29 @@ export default function HomePage({ onLogout, user }) {
         onLogout()
         history.push("/")
     }
-
+  
+  //updateing state to reflect password being deleted
     function reflectDeletedPassword(id) {
         const updatedPasswords = passwords.filter(password => password.id !== id)
         setPasswords(updatedPasswords)
     }
   
+  //controlled form for search field in search component
    function handleSearchChange(e) {
      setSearch(e.target.value);
    }
 
+  //logic to filter passwords when search field is typed in 
    const searchPasswords = passwords.filter((password) =>
      password.key.toLowerCase().startsWith(search.toLowerCase())
    );
   
+  //controlled form for sort option 
   function handleSortChange(e) {
     setSort(e.target.value)
   }
 
+  //logic to sort passwords based on selection from drop down menu
   const sortedPasswords = searchPasswords.sort((pass1, pass2) => {
     switch (sort) {
       case "all":
@@ -64,10 +73,12 @@ export default function HomePage({ onLogout, user }) {
     }
   })
 
+  //toggling display of form 
     function handleToggleForm(e) {
         e.preventDefault()
         setToggleForm(!toggleForm)
     }
+
 
     function handleInput(e) {
         e.preventDefault()
@@ -127,7 +138,9 @@ export default function HomePage({ onLogout, user }) {
           })
     }
 
-
+  if (loading) {
+    return null
+  }
 
     return (
       <div>
@@ -162,7 +175,7 @@ export default function HomePage({ onLogout, user }) {
             </button>
           </form>
         ) : null}
-        {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+        {errors.length > 0 ? errors.map((error) => <h3 className="ui violet message">{error}</h3>) : null}
         <button className="ui basic orange button" onClick={handleToggleForm}>
           Add Password
         </button>

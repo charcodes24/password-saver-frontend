@@ -117,7 +117,7 @@ export default function Password({ password, reflectDeletedPassword, updatePassw
               </form>
             </div>
           ) : null}
-          {errors.length > 0 ? errors.map((error) => <h3>{error}</h3>) : null}
+          {errors.length > 0 ? errors.map((error) => <h3 className="ui violet message">{error}</h3>) : null}
         </div>
       </div>
     );
