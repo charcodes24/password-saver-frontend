@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { trackPromise } from "react-promise-tracker";
 
 import PasswordCard from "./PasswordCard";
 import Search from "./Search";
@@ -11,14 +10,14 @@ export default function HomePage({ onLogout, user }) {
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("all")
   const [loading, setLoading] = useState(true)
-    const [passwords, setPasswords] = useState([])
-    const [toggleForm, setToggleForm] = useState(false)
-    const history = useHistory()
-    const [form, setForm] = useState({
-        key: "",
-        charm: "",
-        chain: ""
-    })
+  const [passwords, setPasswords] = useState([])
+  const [toggleForm, setToggleForm] = useState(false)
+  const history = useHistory()
+  const [form, setForm] = useState({
+      key: "",
+      charm: "",
+      chain: ""
+  })
 
   //fetching user's passwords for display
   useEffect(() => {
